@@ -4,6 +4,9 @@ const dotenv = require('dotenv')
 const mongoose = require('mongoose')
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const loginRouter = require('./router/loginRouter')
+const usersRouter = require('./router/usersRouter')
+const inboxRouter = require('./router/inboxRouter')
 
 // internal imports
 const {notFoundHandler, errorHandler} = require('./middlewares/common/errorHandler')
@@ -33,11 +36,10 @@ app.use(express.static(path.join(__dirname, "public")))
 app.use(cookieParser('secret'))
 
 // routing setup
+app.use('/', loginRouter)
+app.use('/users', usersRouter)
+app.use('/inbox', inboxRouter)
 
-// 404 error handling
- app.use(notFoundHandler)
- //common error handler
- app.use(errorHandler)
 
 app.listen(8000, ()=>{
     console.log(`app listening to port ${process.env.PORT}`)
