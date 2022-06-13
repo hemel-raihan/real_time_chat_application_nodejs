@@ -15,7 +15,7 @@ const app = express();
 dotenv.config()
 
 // database connection
-mongoose.connect('mongodb+srv://chatApplication:miAToUuy89O5hYGm@cluster0.khxme.mongodb.net/chatApplication?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://chatApplication:miAToUuy89O5hYGm@cluster0.khxme.mongodb.net/chatapplication?retryWrites=true&w=majority', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })
