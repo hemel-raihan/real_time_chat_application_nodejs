@@ -24,9 +24,7 @@ function uploader(
           .replace(fileExt, "")
           .toLowerCase()
           .split(" ")
-          .join("-") +
-        "-" +
-        Date.now();
+          .join("-") + "-" + Date.now();
 
       cb(null, fileName + fileExt);
     },
@@ -38,7 +36,7 @@ function uploader(
     limits: {
       fileSize: max_file_size,
     },
-    fileFilter: (req, file, cb) => {
+    fileFilter: (req, file, cb) => {        // cb = call back
       if (allowed_file_types.includes(file.mimetype)) {
         cb(null, true);
       } else {
