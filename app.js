@@ -7,12 +7,29 @@ const cookieParser = require('cookie-parser');
 const loginRouter = require('./router/loginRouter')
 const usersRouter = require('./router/usersRouter')
 const inboxRouter = require('./router/inboxRouter')
+const http = require("http");
+const moment = require("moment");
 
 // internal imports
 const {notFoundHandler, errorHandler} = require('./middlewares/common/errorHandler')
 
 const app = express();
+//const server = http.createServer(app);
+var server = app.listen(8000);
 dotenv.config()
+
+// socket creation
+//const { Server } = require("socket.io");
+//const io = new Server(server);
+const io = require('socket.io')(server, {cors: { origin: "*"}});
+global.io = io;
+
+io.on('connection', (socket) => {
+    console.log('user:' + socket.id)
+})
+
+// set comment as app locals
+app.locals.moment = moment;
 
 // database connection
 mongoose.connect('mongodb+srv://chatApplication:miAToUuy89O5hYGm@cluster0.khxme.mongodb.net/chatapplication?retryWrites=true&w=majority', {
@@ -41,6 +58,7 @@ app.use('/users', usersRouter)
 app.use('/inbox', inboxRouter)
 
 
-app.listen(8000, ()=>{
+app.listen(5000, ()=>{
     console.log(`app listening to port ${process.env.PORT}`)
 })
+
